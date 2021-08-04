@@ -8,8 +8,8 @@ namespace TechnicalTest.App
 {
     public class ArgumentValidator : IArgumentValidator
     {
-        private const int CommandLineArgsCount = 4;
-        private const int ExpectedWordLength = 4;
+        protected const int CommandLineArgsCount = 4;
+        protected const int ExpectedWordLength = 4;
 
         private readonly ILogger<IArgumentValidator> _logger;
 
@@ -30,12 +30,7 @@ namespace TechnicalTest.App
             {
                 throw new ArgumentException($"Incorrect number of command line arguments. Found: {args.Length}, Expected: {CommandLineArgsCount}");
             }
-
-            if (!File.Exists(args[0]))
-            {
-                throw new ArgumentException("Input file not found or not accessible.");
-            }
-
+          
             if (args[1].Length != ExpectedWordLength)
             {
                 throw new ArgumentException("StartWord must be 4 characters");
@@ -44,6 +39,11 @@ namespace TechnicalTest.App
             if (args[2].Length != ExpectedWordLength)
             {
                 throw new ArgumentException("EndWord must be 4 characters");
+            }
+
+            if (!File.Exists(args[0]))
+            {
+                throw new FileNotFoundException("Input file not found or not accessible.");
             }
 
             _logger.LogInformation("Command line arguments validated.");
