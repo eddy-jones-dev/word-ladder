@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace TechnicalTest.App
+namespace TechnicalTest.Domain
 {
     public class ArgumentValidator : IArgumentValidator
     {

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using TechnicalTest.Domain;
+using TechnicalTest.Domain.Interfaces;
+using TechnicalTest.Domain.Services;
 
 namespace TechnicalTest.App
 {
@@ -30,6 +33,7 @@ namespace TechnicalTest.App
         {
             services.AddLogging(configure => configure.AddConsole())
             .AddTransient<IArgumentValidator,ArgumentValidator>()
+            .AddTransient<IWordLadderService,WordLadderService>()
             .AddTransient<WordLadder>();
         }
     }

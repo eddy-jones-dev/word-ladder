@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.IO;
 using TechnicalTest.App;
+using TechnicalTest.Domain;
 using Xunit;
 
 namespace TechnicalTest.Tests

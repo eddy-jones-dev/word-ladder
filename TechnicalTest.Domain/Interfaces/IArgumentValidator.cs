@@ -1,4 +1,4 @@
-﻿namespace TechnicalTest.App
+﻿namespace TechnicalTest.Domain
 {
     public interface IArgumentValidator
     {
