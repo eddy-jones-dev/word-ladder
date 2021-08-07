@@ -20,8 +20,6 @@
   - Readme file (this doc)
   - Publish via Github
   - Consider performance (handling file contents, tree traversal)
-  
-
 #### 2. Examine words list
   - ~ 27000 rows
   - Mix of capitalisation
@@ -38,16 +36,14 @@
 #### 4. Plan Process
   - Create console app and test project
   - Identify any test nuget packages required (XUnit, FluentAssertions)
-  
   - Validate params
   - Load dictionary file
   - Filter file to relevant `validWords` set
   - Create graph of linked words
   - Work out path from start to end - make part of graph nodes?
-
-
+  - Log output to file (and console)
 #### 5. Future Enhancements
-
   -  Extract consts (valid word length etc.) into a config file and use `IOptions` to generate a typed settings object.
   -  Have console prompt for another pair of words rather than needing to restart app.
   -  Investigate more efficient graph creation methods, or word ladder retrieval.
+  -  `GetNextWords` is looping the valid words repeatedly - could this be mapped into something better to query?

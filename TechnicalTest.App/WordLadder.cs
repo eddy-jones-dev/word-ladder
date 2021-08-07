@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using TechnicalTest.Domain;
@@ -25,26 +26,41 @@ namespace TechnicalTest.App
             _logger.LogInformation($"Application Starting");
             _argumentValidator.ValidateArguments(args);
 
-            var words = await _fileService.GetFileContentsAsync(args[0]);
+            var dictionaryFile = args[0];
+            var startWord = args[1].ToLowerInvariant();
+            var endWord = args[2].ToLowerInvariant();
+            var outputFile = args[3];
 
-            var StartWord = args[1].ToLowerInvariant();
-            var EndWord = args[2].ToLowerInvariant();
+            var words = await _fileService.GetFileContentsAsync(dictionaryFile);
+            var validWords = await _wordLadderService.FilterValidWords(words);
 
-            var validWords = _wordLadderService.FilterValidWords(words);
-            if (!validWords.Contains(StartWord))
+            await ValidateWordsExistInDictionary(startWord, endWord, validWords);
+
+            var graphNodes = await _wordLadderService.CreateGraph(startWord, endWord, validWords);
+
+            var numberOfChanges = await _wordLadderService.GetNumberOfChanges(graphNodes);
+            var wordLadder = _wordLadderService.GetWordLadder(graphNodes, endWord, numberOfChanges);
+            await _fileService.WriteResutsToFile(wordLadder,outputFile);
+            foreach (var node in wordLadder)
+            {
+                Console.WriteLine(node);
+            }           
+        }
+
+        private async Task ValidateWordsExistInDictionary(string startWord, string endWord, List<string> validWords)
+        {
+            if (!validWords.Contains(startWord))
             {
                 throw new ArgumentException("StartWord not in validWords");
             }
 
-            if (!validWords.Contains(EndWord))
+            if (!validWords.Contains(endWord))
             {
                 throw new ArgumentException("EndWord not in validWords");
             }
 
-            
-            Console.ReadLine();
         }
-      
+
         internal void HandleGlobalError(Exception ex)
         {
             _logger.LogError($"An error occurred: {ex.Message}");

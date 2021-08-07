@@ -134,6 +134,11 @@ namespace TechnicalTest.Domain.Services
             return new List<string>{string.Empty};
         }
 
-
+        public List<string> GetWordLadder(List<Node> nodes, string endWord, int level)
+        {
+            var result= nodes.First(node => node.ChildNode == endWord && node.Level == level).NodePath;
+            result.Add(endWord);
+            return result;
+        }
     }
 }

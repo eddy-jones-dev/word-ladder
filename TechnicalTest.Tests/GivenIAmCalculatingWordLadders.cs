@@ -39,7 +39,7 @@ namespace TechnicalTest.Tests
         [InlineData("spin", "spot", 2)]
         [InlineData("door", "roar", 3)]
         [InlineData("nice", "lice", 1)]
-        //[InlineData("bank", "dome", 4)]
+        [InlineData("bank", "dome", 4)]
         public async Task WhenIHaveAGraph_ThenICanGetTheNumberOfChanges(string startWord,string endWord, int numberOfChanges)
         {
 

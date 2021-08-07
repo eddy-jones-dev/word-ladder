@@ -21,7 +21,6 @@ namespace TechnicalTest.Domain.Services
         public async Task<string[]> GetFileContentsAsync(string path)
         {
             _logger.LogInformation($"Loading file contents from {path}");
-
             return await File.ReadAllLinesAsync(path);
         }
 
