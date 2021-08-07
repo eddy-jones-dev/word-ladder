@@ -10,7 +10,6 @@ namespace TechnicalTest.Domain.Interfaces
     {
         Task<List<string>> GetNextWords(string startWord, List<string> validWords);
         Task<List<string>> FilterValidWords(string[] dictionary);
-        Task<int> GetDistance(List<string> words);
         Task<int> GetDifference(string startWord, string validWord);
         Task<List<Node>> CreateGraph(string startWord, string endWord, List<string> validWords);
         Task<int> GetNumberOfChanges(List<Node> graph);
