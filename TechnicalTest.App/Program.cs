@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 using TechnicalTest.Domain;
 using TechnicalTest.Domain.Interfaces;
 using TechnicalTest.Domain.Services;
@@ -9,17 +10,17 @@ namespace TechnicalTest.App
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var services = new ServiceCollection();
             ConfigureServices(services);
             
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            WordLadder app = serviceProvider.GetService<WordLadder>();
+            var serviceProvider = services.BuildServiceProvider();
+            var app = serviceProvider.GetService<WordLadder>();
 
             try
             {
-                app.Start(args);
+                await app.Start(args);
             }
             catch (Exception ex)
             {
@@ -33,6 +34,7 @@ namespace TechnicalTest.App
         {
             services.AddLogging(configure => configure.AddConsole())
             .AddTransient<IArgumentValidator,ArgumentValidator>()
+            .AddTransient<IFileService,FileService>()
             .AddTransient<IWordLadderService,WordLadderService>()
             .AddTransient<WordLadder>();
         }

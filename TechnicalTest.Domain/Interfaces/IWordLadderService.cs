@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TechnicalTest.Domain.Services;
 
 namespace TechnicalTest.Domain.Interfaces
 {
     public interface IWordLadderService
     {
-        List<string> GetNextWords(string startWord, List<string> validWords);
-        List<string> FilterValidWords(string[] dictionary);
-        int GetDistance(List<string> words);
-        List<Node> CreateGraph(string startWord, string endWord, List<string> validWords);
-        int GetNumberOfChanges(List<Node> graph);
+        Task<List<string>> GetNextWords(string startWord, List<string> validWords);
+        Task<List<string>> FilterValidWords(string[] dictionary);
+        Task<int> GetDistance(List<string> words);
+        Task<int> GetDifference(string startWord, string validWord);
+        Task<List<Node>> CreateGraph(string startWord, string endWord, List<string> validWords);
+        Task<int> GetNumberOfChanges(List<Node> graph);
     }
 }

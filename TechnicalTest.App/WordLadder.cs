@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using TechnicalTest.Domain;
 using TechnicalTest.Domain.Interfaces;
 
@@ -10,24 +11,26 @@ namespace TechnicalTest.App
     {
         private readonly ILogger _logger;
         private readonly IArgumentValidator _argumentValidator;
-        private readonly IWordLadderService _service;
-        public WordLadder(ILogger<WordLadder> logger, IArgumentValidator argumentValidator, IWordLadderService service)
+        private readonly IWordLadderService _wordLadderService;
+        private readonly IFileService _fileService;
+        public WordLadder(ILogger<WordLadder> logger, IArgumentValidator argumentValidator, IWordLadderService wordLadderService, IFileService fileService)
         {
             _logger = logger;
             _argumentValidator = argumentValidator;
-            _service = service;
+            _wordLadderService = wordLadderService;
+            _fileService = fileService;
         }
-        internal void Start(string[] args)
+        internal async Task Start(string[] args)
         {
             _logger.LogInformation($"Application Starting");
             _argumentValidator.ValidateArguments(args);
 
-            var words = File.ReadAllLines("C:\\words\\words-english\\words-english.txt");
+            var words = await _fileService.GetFileContentsAsync(args[0]);
 
-            var StartWord = "Spin".ToLowerInvariant();
-            var EndWord = "Spot".ToLowerInvariant();
+            var StartWord = args[1].ToLowerInvariant();
+            var EndWord = args[2].ToLowerInvariant();
 
-            var validWords = _service.FilterValidWords(words);
+            var validWords = _wordLadderService.FilterValidWords(words);
             if (!validWords.Contains(StartWord))
             {
                 throw new ArgumentException("StartWord not in validWords");
