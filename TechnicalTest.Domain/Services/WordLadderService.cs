@@ -58,37 +58,51 @@ namespace TechnicalTest.Domain.Services
 
         public async Task<List<Node>> CreateGraph(string startWord, string endWord, List<string> validWords)
         {
-            var result = new List<Node>();
+            var result = new List<Node>
+            {
+                new Node
+                {
+                    Level = 0,
+                    ParentNode = "",
+                    ChildNode = startWord,
+                    NodePath = new List<string>()
+                }
+            };
+
+            var level = 1;
+            var allLevelWords = new Queue<string>();
 
             var queue = new Queue<string>();
             queue.Enqueue(startWord);
 
-            var level = 0;
-            var allLevelWords = new Queue<string>();
             while (queue.Count > 0)
             {
+                var currentWord = queue.Dequeue();
 
-                var workingWord = queue.Dequeue();
-                var nextWords = await GetNextWords(workingWord, validWords);
+                //if (currentWord == endWord)
+                //{
+                //    break;
+                //}
+
+                var nextWords = await GetNextWords(currentWord, validWords);
 
                 foreach (var word in nextWords)
                 {
                     result.Add(new Node
                     {
                         Level = level,
-                        ParentNode = workingWord,
+                        ParentNode = currentWord,
                         ChildNode = word,
-                        NodePath = GetPredecessor(level, workingWord, result)
+                        NodePath = GetPredecessor(level, currentWord, result)
                     });
 
                     allLevelWords.Enqueue(word);
                 }
 
-                if (queue.Contains(endWord))
+               if (allLevelWords.Contains(endWord))
                 {
                     break;
                 }
-
                 if (queue.Count == 0)
                 {
                     level++;
@@ -106,8 +120,18 @@ namespace TechnicalTest.Domain.Services
 
         private List<string> GetPredecessor(int level, string workingWord, List<Node> graph)
         {
-            var result = graph.FirstOrDefault(node => node.Level == (level - 1) && node.ChildNode == workingWord);
-            return result?.NodePath ?? new List<string>();
+            var predecessor = graph.FirstOrDefault(node => node.Level == (level - 1) && node.ChildNode == workingWord);
+            if (predecessor?.NodePath != null)
+            {
+                var result = new List<string>();
+                foreach (var node in predecessor.NodePath)
+                {
+                    result.Add(node);
+                }
+                result.Add(workingWord);
+                return result;
+            }
+            return new List<string>{string.Empty};
         }
 
 
