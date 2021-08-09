@@ -43,6 +43,7 @@
   - Work out path from start to end - make part of graph nodes?
   - Log output to file (and console)
 #### 5. Future Enhancements
+  -  Tests are importing a file from the file system - ideally this would be static data in the solution
   -  ~~Extract consts (valid word length etc.) into a config file and use `IOptions` to generate a typed settings object.~~ - DONE
   -  Have console prompt for another pair of words rather than needing to restart app.
   -  Investigate more efficient graph creation methods, or word ladder retrieval.
