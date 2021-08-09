@@ -43,7 +43,28 @@
   - Work out path from start to end - make part of graph nodes?
   - Log output to file (and console)
 #### 5. Future Enhancements
-  -  Extract consts (valid word length etc.) into a config file and use `IOptions` to generate a typed settings object.
+  -  ~~Extract consts (valid word length etc.) into a config file and use `IOptions` to generate a typed settings object.~~ - DONE
   -  Have console prompt for another pair of words rather than needing to restart app.
   -  Investigate more efficient graph creation methods, or word ladder retrieval.
   -  `GetNextWords` is looping the valid words repeatedly - could this be mapped into something better to query?
+
+### Conclusions
+
+#### Time Spent: ~ 4 hours split over the course of the week.
+
+I really enjoyed this challenge; it was just enough to get your teeth into and to produce something that would benefit from a proper structured solution. 
+I started by working through the question, as noted above, and picking out the relevant criteria so that I could ensure I was producing the right result. 
+Having done prior work on speech recognition and translating potentially inaccurate input into domain actions, I was aware of methods including Levenshtein Distance
+and Breadth-First search for finding data in a large data set. I came to the conclusion that BFS would be more appropriate given that we were working with 
+a particular subset of data and not just finding the theoretical minimum distance. 
+Before starting, I also identified from the dictionary file any 'gotchas' that I might need to code against when I came to developing the solution. 
+
+Once it came to development, it was the usual iterative process. I had some concrete rules to work with in terms of input parameters, so these were good 
+candidates for TDD and a dedicated validator service. Beyond that, most of the work came in refining the graph modelling method, and trying to determine 
+the best way to track not just the number of changes made but also what those changes were. I started with small changesets (spin->spot) and then scaled up 
+to check that the methodology was still correct and that performance was still good. The size of the dataset meant that it could be held in memory, I was 
+discarding any words that were not 4 characters anyway, but a bigger dataset probably would have necessitated a different approach. Due to the looping 
+involved, I had to work on identifying the right places to break out, to increment values, update queues/lists etc. and this was probably the most 
+complicated part. The benefit of only being able to tackle the task in 45-60 min intervals meant that there was plenty of thinking time in between to work 
+things out in my head!
+
