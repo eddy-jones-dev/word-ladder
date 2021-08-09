@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TechnicalTest.App": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\\\words\\\\words-english\\\\words-english.txt\" bank dome \"C:\\\\words\\\\words-english\\\\output.txt\""
+    }
+  }
+}
