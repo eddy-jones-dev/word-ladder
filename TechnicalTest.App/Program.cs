@@ -31,6 +31,7 @@ namespace TechnicalTest.App
             catch (Exception ex)
             {
                 app.HandleGlobalError(ex);
+                throw ex;
             }
             
             Console.ReadLine();
